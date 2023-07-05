@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WildFarm.Models.Enums;
 
 namespace WildFarm.Models.Interfaces
 {
@@ -11,11 +12,5 @@ namespace WildFarm.Models.Interfaces
         public int Quantity { get; }
         public  FoodTypeEnum Type { get; }
     }
-    public enum FoodTypeEnum
-    {
-        Vegetable,
-        Fruit,
-        Meat,
-        Seeds
-    }
+    
 }

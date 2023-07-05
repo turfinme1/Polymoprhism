@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WildFarm.Models.Enums;
 using WildFarm.Models.Interfaces;
 
 namespace WildFarm.Models
 {
     public abstract class Animal : IAnimal
     {
-        private ICollection<FoodTypeEnum> foodPreference;
+        private FoodTypeEnum foodPreference;
         private double weightIncreaseParam;
-        protected Animal(string name, double weight, ICollection<FoodTypeEnum> foodPreference, double weightIncreaseParam)
+        protected Animal(string name, double weight, FoodTypeEnum foodPreference, double weightIncreaseParam)
         {
             Name = name;
             Weight = weight;
@@ -25,19 +26,18 @@ namespace WildFarm.Models
 
         public int FoodEaten { get; private set; }
 
-        public void Feed(FoodTypeEnum food, int quantity)
+        public void Feed(IFood food)
         {
-            if (!foodPreference.Contains(food))
-            {
-                throw new ArgumentException($"{this.GetType().Name} does not eat {food}!");
+            if (!foodPreference.HasFlag(food.Type))
+            {   
+                throw new ArgumentException($"{this.GetType().Name} does not eat {food.Type}!");
             }
 
-            FoodEaten += quantity;
-            Weight += quantity * weightIncreaseParam;
-
+            FoodEaten += food.Quantity;
+            Weight += food.Quantity * weightIncreaseParam;
         }
 
         public abstract string Sound();
-        public abstract new  string ToString();
+        public abstract new string ToString();
     }
 }
